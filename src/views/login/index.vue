@@ -55,7 +55,7 @@ export default {
           //向后台提交用户信息  axios
           this.$http
             .post(
-              "https://www.liulongbin.top:8888/api/private/v1/login",
+              "/login",
               this.ruleForm
             )
             .then(result => {
@@ -116,7 +116,7 @@ export default {
   bottom: 0;
   top: 0;
   margin: auto;
-  text-align: center;
+  // text-align: center;
   background: #fff;
   padding: 30px 20px 10px 20px;
   border-radius: 10px;
