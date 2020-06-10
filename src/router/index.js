@@ -13,6 +13,10 @@ const userList=()=>import('@/views/userlist/index.vue')
 
 const routes = [
   {
+    path: '/',
+    redirect: '/home'
+  },
+  {
     path: "/home",
     name: "Home",
     component: Home,
@@ -24,7 +28,7 @@ const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/login',
     name:'Login',
     component:Login
   }

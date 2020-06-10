@@ -25,7 +25,7 @@
         <el-aside width="200px" class="el_aside">
           <!-- 左侧导航start -->
           <el-menu
-            default-active="1"
+            :default-active="$route.path"
             :unique-opened="true"
             text-color="#fff"
             class="el_menu"
@@ -39,7 +39,7 @@
                 <i class="el-icon-user"></i>
                 <span>用户管理</span>
               </template>
-              <el-menu-item index="home">
+              <el-menu-item index="/home">
                 <i class="el-icon-s-grid"></i>
                 <span>用户列表</span>
               </el-menu-item>

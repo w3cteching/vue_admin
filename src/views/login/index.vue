@@ -50,7 +50,7 @@ export default {
   methods: {
     goLogin() {
       this.$refs["login_Form"].validate(valid => {
-        //表单通过validate方法实现整体表单难，其中valid为true代表所有验证规则通过,否则报错
+        //表单通过validate方法实现整体表单，其中valid为true代表所有验证规则通过,否则报错
         if (valid) {
           //向后台提交用户信息  axios
           this.$http
