@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import {login} from '@/http/api'
 export default {
   name: "login",
   data() {
@@ -49,53 +50,16 @@ export default {
   },
   methods: {
     goLogin() {
-      this.$refs["login_Form"].validate(valid => {
+      this.$refs["login_Form"].validate(async valid => {
         //表单通过validate方法实现整体表单，其中valid为true代表所有验证规则通过,否则报错
         if (valid) {
-          //向后台提交用户信息  axios
-          this.$http
-            .post(
-              "/login",
-              this.ruleForm
-            )
-            .then(result => {
-              console.log("登录成功返回的数据：", result);
-              //解构赋值
-              const {
-                data: res,
-                meta: { msg, status }
-              } = result.data;
-              const { token } = res;
+          //调用封装的login方法
+         const result = await login(this.ruleForm)
+         let {flag}=result;
+         if(flag ===2) {
+           this.$router.push({ name: "Home" });
+         }
 
-              if (status === 200) {
-                //1.存token  cookie,localStorage,sessionStorage
-                localStorage.setItem("token", token); //二次封装 set() get(),remove()
-
-                //2.跳转到后台首页
-                this.$router.push({ name: "Home" });
-
-                //3.登录成功提示
-                this.$message({
-                  message: "登录成功",
-                  type: "success"
-                });
-              } else if(status===400) {
-                  console.log(222222)
-                //登录失败提示
-                this.$message({
-                  message: msg,
-                  type: "error"
-                });
-              }
-            })
-            .catch(error => {
-              console.log("error:", error);
-             //登录失败提示
-                this.$message({
-                  message: "登录失败",
-                  type: "error"
-                });
-            });
         } else {
           //登录失败，给出失败的提示
           return false;

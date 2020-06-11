@@ -133,6 +133,7 @@
 </template>
 
 <script>
+import {getUser,modifyUserStaus,editUserInfo} from '@/http/api'
 import _ from "lodash";
 export default {
   name: "userlist",
@@ -185,24 +186,11 @@ export default {
      * 编辑用户，真正将修改的用户信息写入后台数据库
      */
     async editUserOk() {
-      console.log("edit:", this.userForm);
-     // const result = this.$http.put(`url地址`,请求的参数);
-      const result = await this.$http.put(`/users/${this.userForm.id}`,this.userForm);
-      let {
-        meta: { msg, status }
-      } = result.data;
 
-      if (status === 200) {
-        this.$message({
-          message: msg,
-          type: "success"
-        });
-      } else {
-        this.$message({
-          message: msg,
-          type: "error"
-        });
-      }
+      let {id,email,mobile} =this.userForm;
+    
+        editUserInfo(id,{email,mobile})
+
 
       this.dialogFormVisibleUserDel=false;
     },
@@ -219,31 +207,12 @@ export default {
      * 通过switch改变用户的状态
      */
     async setUserStatus(user) {
-      //请求路径：users/:uId/state/:type
-      //uId用户 ID不能为空`携带在url中
-      //`type用户状态
+      // `users/${user.id}/state/${user.mg_state}`
 
-      let result = await this.$http.put(
-        `users/${user.id}/state/${user.mg_state}`
-      );
+      const result=modifyUserStaus(user)
+      console.log('修改用户状态：',result)
 
-      console.log("result:", result);
 
-      let {
-        meta: { msg, status }
-      } = result.data;
-
-      if (status === 200) {
-        this.$message({
-          message: msg,
-          type: "success"
-        });
-      } else {
-        this.$message({
-          message: msg,
-          type: "error"
-        });
-      }
     },
     /**
      * 向后台确认添加新用户
@@ -331,47 +300,14 @@ export default {
      * pagesize:每页显示条数不能为空
      */
     //获取用户列表
-    getUserList() {
-      //this.$http.get()
-      //this.$http.post()
-      //this.$http({url:'',method:''})
-      //获取token
-      const token = localStorage.getItem("token");
-      //配置头信息，在封装的request请求中去写
-      this.$http.defaults.headers["Authorization"] = token;
-      //发送ajax请求
-      this.$http({
-        method: "get",
-        url: "/users",
-        params: this.pageinfo
-      }).then(res => {
-        console.log("res::", res);
-        //解构取值
-        if (res.data && res.data.data) {
-          var {
-            data: { pagenum, total, users },
-            meta: { msg, status }
-          } = res.data;
-        } else {
-          var {
-            meta: { msg, status }
-          } = res.data;
-        }
-        if (status === 200) {
-          this.tableData = users;
-          this.pageinfo.pagenum = pagenum;
-          this.total = total;
-          this.$message({
-            message: msg,
-            type: "success"
-          });
-        } else {
-          this.$message({
-            message: msg,
-            type: "error"
-          });
-        }
-      });
+  async  getUserList() {
+     const result=await getUser(this.pageinfo)
+      let {flag,result:res}=result;
+      if(result.flag === 2) {
+          this.tableData = res.users;
+          this.pageinfo.pagenum = res.pagenum;
+          this.total = res.total;
+      }
     },
     //分页相关的方法
     //每页条数不同时触发的方法

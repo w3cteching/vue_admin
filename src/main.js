@@ -12,7 +12,8 @@ import Axios from 'axios'
 Vue.prototype.$http = Axios;
 
 //推荐在封装的request请求中写，我这里是为了省事儿，写这里了
-Axios.defaults.baseURL='https://www.liulongbin.top:8888/api/private/v1'
+Axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1'
+
 
 
 moment.locale('zh-cn')
