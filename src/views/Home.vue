@@ -50,11 +50,11 @@
                 <i class="el-icon-s-tools"></i>
                 <span>权限管理</span>
               </template>
-              <el-menu-item index="2-1">
+              <el-menu-item index="/rolelist">
                 <i class="el-icon-s-grid"></i>
                 角色列表
               </el-menu-item>
-              <el-menu-item index="2-2">
+              <el-menu-item index="/rightlist">
                 <i class="el-icon-s-grid"></i>
                 权限列表
               </el-menu-item>

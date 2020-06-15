@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import {login} from '@/http/api'
+import { login } from "@/http/api";
 export default {
   name: "login",
   data() {
@@ -54,12 +54,13 @@ export default {
         //表单通过validate方法实现整体表单，其中valid为true代表所有验证规则通过,否则报错
         if (valid) {
           //调用封装的login方法
-         const result = await login(this.ruleForm)
-         let {flag}=result;
-         if(flag ===2) {
-           this.$router.push({ name: "Home" });
-         }
-
+          const result = await login(this.ruleForm);
+          let { flag } = result;
+          if (flag === 2) {
+            //登录成功，则中转回上次访问的页面
+            //this.$router.push('/home');
+            this.$router.push(this.$route.query.redirect)
+          }
         } else {
           //登录失败，给出失败的提示
           return false;

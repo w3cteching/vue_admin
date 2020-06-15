@@ -8,7 +8,9 @@ import Home from "../views/Home.vue";
 
 //路由懒加载的写法  @===src
 const Login=()=>import('@/views/login/index.vue')
-const userList=()=>import('@/views/userlist/index.vue')
+const UserList=()=>import('@/views/userlist/index.vue')
+const RoleList=()=>import('@/views/rolelist/index.vue')
+const RightList=()=>import('@/views/rightlist/index.vue')
 
 
 const routes = [
@@ -21,10 +23,13 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {//设置路由元数据
-      Authorition:true
+      Authorition: true
     },
     children: [
-      { path: '', component: userList}
+      { path: '', component: UserList},
+      { path: '/rolelist', component: RoleList},
+      { path: '/rightlist', component: RightList},
+      
     ]
   },
   {

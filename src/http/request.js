@@ -2,6 +2,7 @@
 import axios from 'axios'
 
 import { Message } from 'element-ui'
+import { login } from './api';
 
 const service = axios.create({
     //默认访问基地址
@@ -15,7 +16,7 @@ service.interceptors.request.use(function (config) {
     //获取token,有的接口不需要token，例如：登录，有的需要token,要做判断处理
     if (config.url !== 'login') {
       
-        const token = localStorage.getItem('token')
+      const token = localStorage.getItem('token'); 
         console.log('token:',token)
       //配置头信息，在封装的request请求中去写
        config.headers["Authorization"] = token;
@@ -31,26 +32,19 @@ service.interceptors.request.use(function (config) {
 
 //响应拦截
 service.interceptors.response.use(function (response) {
-    //成功返回 对状态码进行统一处理  例如：200，400，500 单独判断处理各种情况
     
+  console.log('response删除状态码：',response)
+    //成功返回 对状态码进行统一处理  例如：200，400，500 单独判断处理各种情况
+    var { data: res, meta: { msg, status } } = response.data;
+  if (response.url==='login') {
+    var { token } = res;
+   }
+
+    console.log('status删除状态码：',status)
+
+  
     //解构赋值
     if (response.data.data && response.data.meta) {
-        var { data: res, meta: { msg, status } } = response.data;
-       
-        var { token } = res;
-
-        // if (status === 400) {
-        //     //登录失败提示
-        //     Message({
-        //       message: msg,
-        //       type: "error"
-        //     });
-    
-        //  Promise.reject(msg)
-          
-        // }
-      
-    
         if (status === 200) {
             console.log('msg::',msg)
           //1.存token  cookie,localStorage,sessionStorage
@@ -80,16 +74,29 @@ service.interceptors.response.use(function (response) {
         }
 
     } else {
+       
+      if (status === 200) { 
+          Message({
+            message:msg,
+            type: "sucess"
+          });
+        
+          return {
+            msg: msg,
+            flag:1 
+        }
+
+      } else  {
         
         Message({
-            message:'参数有误，请检查',
-            type: "error"
+          message:'参数有误，请检查',
+          type: "error"
         });
+      }
+
+       
         
-       return {
-           msg: msg,
-           flag:1 
-       }
+      
             
      }
    
