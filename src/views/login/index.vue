@@ -55,10 +55,11 @@ export default {
         if (valid) {
           //调用封装的login方法
           const result = await login(this.ruleForm);
+          console.log('登录结果：',result)
           let { flag } = result;
           if (flag === 2) {
             //登录成功，则中转回上次访问的页面
-            //this.$router.push('/home');
+           // this.$router.push('/home');
             this.$router.push(this.$route.query.redirect)
           }
         } else {
