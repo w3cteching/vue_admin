@@ -142,8 +142,6 @@ export function getRightTree(userid) {
  * @params {string} data 是全部或部分选中的id  '1,2,2,3,5,6,7,7,8'
  */
 export function setRightsToRole(roleId, data) {
-    console.log(roleId)
-    console.log(data)
     return request({
         url: `roles/${roleId}/rights`,
         method: 'post',
@@ -151,6 +149,58 @@ export function setRightsToRole(roleId, data) {
     })
 }
 
+/**
+ * 商品列表接口
+ */
+export function goodsList(params) {
+    return request({
+        url: `goods`,
+        method: 'get',
+        params
+    })
+}
+
+/**
+ * 获取商品分类接口
+ */
+export function getGoodsCate(type=3) {
+    return request({
+        url: `categories`,
+        method: 'get',
+        params: {type}, //默认指定三级分类，通过type可更改1,2,3
+    })
+}
+
+/**
+ * 针对商品指定的第三级分类id，来确定该商品的参数（动态参数，静态参数）
+ * 动态参数：一次可以配置多个值  many
+ * 静态参数：一次只能配置一个值  only
+ * 请求方式：get
+ * 要传递的参数：sel：[only或many]
+ * categories/:id/attributes
+ */
+export function getCateIdAttribute(cat_id,type='many') {
+    return request({
+        url: `categories/${cat_id}/attributes`,
+        method: 'get',
+        params: {sel:type}, //默认指定动态参数many，也可由用户传递only来指定静态参数
+    })
+}
+
+/**
+ * 获取商品接口
+ */
+export function addGoods(data) {
+    return request({
+        url: `goods`,
+        method: 'post',
+        data
+    })
+}
+
+
+
+ 
 
 
 

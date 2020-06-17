@@ -25,7 +25,6 @@ Vue.filter('date', function (t) {
 
 Vue.filter('levelFn', function (num) {
   let result = ''
-  console.log(typeof num)
   switch (num) {
     case '0' : result = '一级'; break;
     case '1' : result = '二级'; break;
@@ -42,7 +41,6 @@ import '@/assets/css/reset.css'
 
 //全局路由守卫
 router.beforeEach((to, from, next) => {
-  console.log('to:', to)
   const token = localStorage.getItem('token');
   //some是数组的遍历方法，只要任意一个数组元素是true,就返回true
   if (to.matched.some(item => item.meta.Authorition)) {
