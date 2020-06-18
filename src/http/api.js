@@ -199,6 +199,18 @@ export function addGoods(data) {
 }
 
 
+/**
+ * 获取数据报表
+ */
+export function getReportChart(data) {
+    return request({
+        url: `reports/type/1`,
+        method: 'get',
+        data
+    })
+}
+
+
 
  
 

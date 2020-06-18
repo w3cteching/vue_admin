@@ -18,6 +18,7 @@ const RoleList=()=>import('@/views/rolelist/index.vue')
 const RightList=()=>import('@/views/rightlist/index.vue')
 const GoodsList=()=>import('@/views/goods/goodslist/index.vue')
 const GoodsAdd=()=>import('@/views/goods/goodsadd/index.vue')
+const Report=()=>import('@/views/report/index.vue')
 
 
 const routes = [
@@ -38,6 +39,7 @@ const routes = [
       { path: '/rightlist', component: RightList},
       { path: '/goodslist', component: GoodsList},
       { path: '/goodsadd', component: GoodsAdd},
+      { path: '/report', component: Report}
       
     ]
   },

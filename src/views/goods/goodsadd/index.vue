@@ -177,9 +177,13 @@ export default {
 
         //调用添加商品接口提交数据
         const res=await addGoods(this.goodsForm)
-        console.log('this.goodsForm：：',JSON.stringify(this.goodsForm))
+        console.log('this.goodsForm：：',this.goodsForm)
         console.log('返回的结果res：：',res)
-
+        if(res.flag===2) {
+           this.$router.push('/goodslist')
+        }
+       
+       
 
     },
     /**
